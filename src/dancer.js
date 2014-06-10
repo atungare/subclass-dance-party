@@ -36,10 +36,10 @@ Dancer.prototype.lineUp = function() {
 };
 
 Dancer.prototype.getPosition = function(){
-  var left = this.$node[0].offsetLeft;
-  var top = this.$node[0].offsetTop;
+  var left = parseFloat(this.$node.css("left"));
+  var top = parseFloat(this.$node.css("top"));
 
-  return [left,top];
+  return [top, left];
 };
 
 

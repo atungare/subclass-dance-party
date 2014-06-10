@@ -19,7 +19,6 @@ $(document).ready(function(){
 
     // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
-
     // make a dancer with a random position
 
     var dancer = new dancerMakerFunction(
@@ -37,21 +36,25 @@ $(document).ready(function(){
     }
   });
 
-  $("body").on("mouseover", ".dancer", function () {
-    debugger;
-    var myLeft = this.offsetLeft;
-    var myTop = this.offsetTop;
+  $("body").on("mouseleave`", ".dancer", function () {
+    // debugger;
+
+    var myLeft = parseFloat($(this).css('left'));
+    var myTop = parseFloat($(this).css('top'))
     var firstClosest;
     var firstDistance;
+    var orig;
 
 
     for(var i = 0; i < window.dancers.length; i++) {
       var tup = window.dancers[i].getPosition();
-      var diffLeft = myLeft - tup[0];
-      var diffTop = myTop - tup[1];
+      var diffLeft = myLeft - tup[1];
+      var diffTop = myTop - tup[0];
       var pythag = Math.sqrt(diffLeft*diffLeft + diffTop * diffTop);
 
-      if (!firstClosest && pythag !== 0){
+      if (pythag === 0){
+        orig = window.dancers[i];
+      } else if (!firstClosest){
         firstClosest =  window.dancers[i];
         firstDistance = pythag;
       } else if (pythag<firstDistance) {
@@ -59,11 +62,17 @@ $(document).ready(function(){
         firstDistance = pythag;
       }
     }
-    var firstPosition = firstClosest.getPosition();
-    this.offsetLeft = firstPosition[0];
-    this.offsetTop = firstPosition[1];
 
-    firstClosest.setPosition(myTop,myLeft);
+    var firstPosition = firstClosest.getPosition();
+
+    console.dir(this);
+    console.dir($(this));
+
+   // $origNode.css({"left":firstPosition[0],"top":firstPosition[1]});
+    orig.setPosition(firstPosition[0], firstPosition[1]);
+
+
+    firstClosest.setPosition(myTop, myLeft);
 
   });
 
