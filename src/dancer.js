@@ -31,6 +31,16 @@ Dancer.prototype.setPosition = function(top, left){
   this.$node.css(styleSettings);
 };
 
+Dancer.prototype.lineUp = function() {
+  this.$node.css({'left':0});
+};
+
+Dancer.prototype.getPosition = function(){
+  var left = this.$node[0].offsetLeft;
+  var top = this.$node[0].offsetTop;
+
+  return [left,top];
+};
 
 
 

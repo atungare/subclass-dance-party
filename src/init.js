@@ -28,6 +28,46 @@ $(document).ready(function(){
       Math.random() * 1000
     );
     $('body').append(dancer.$node);
+    window.dancers.push(dancer);
   });
+
+  $(".lineUpButton").on("click", function () {
+    for(var i = 0; i < window.dancers.length; i++) {
+      window.dancers[i].lineUp();
+    }
+  });
+
+  $("body").on("mouseover", ".dancer", function () {
+    debugger;
+    var myLeft = this.offsetLeft;
+    var myTop = this.offsetTop;
+    var firstClosest;
+    var firstDistance;
+
+
+    for(var i = 0; i < window.dancers.length; i++) {
+      var tup = window.dancers[i].getPosition();
+      var diffLeft = myLeft - tup[0];
+      var diffTop = myTop - tup[1];
+      var pythag = Math.sqrt(diffLeft*diffLeft + diffTop * diffTop);
+
+      if (!firstClosest && pythag !== 0){
+        firstClosest =  window.dancers[i];
+        firstDistance = pythag;
+      } else if (pythag<firstDistance) {
+        firstClosest =  window.dancers[i];
+        firstDistance = pythag;
+      }
+    }
+    var firstPosition = firstClosest.getPosition();
+    this.offsetLeft = firstPosition[0];
+    this.offsetTop = firstPosition[1];
+
+    firstClosest.setPosition(myTop,myLeft);
+
+  });
+
+
+
 });
 
