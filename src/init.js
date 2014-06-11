@@ -36,8 +36,7 @@ $(document).ready(function(){
     }
   });
 
-  $("body").on("mouseleave`", ".dancer", function () {
-    // debugger;
+  $("body").on("mouseleave", ".dancer", function () {
 
     var myLeft = parseFloat($(this).css('left'));
     var myTop = parseFloat($(this).css('top'))
